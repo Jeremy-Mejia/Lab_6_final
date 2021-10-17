@@ -11,51 +11,46 @@
 // Librerías
 //***************************************************************************************************************
 
-#include <Arduino.h>
-#include <LiquidCrystal.h>
-
 //***************************************************************************************************************
 // Definición de Pines
 //***************************************************************************************************************
 
-//Definición de entradas
-#define Pot1 13 // potenciómetro 1
-#define Pot2 12 // potenciómetro 2
+#define btn1 PF_0
+#define btn2 PF_4 
 
-//Definición de pines de salidas LCD
-#define RS 2
-#define E 4 
-#define D4 18
-#define D5 19
-#define D6 21
-#define D7 22
-
+//Pines de los leds
+#define ledR PF_1
+#define ledA PF_2
+#define ledV PF_3
 
 //***************************************************************************************************************
 // Prototipo de Funciones
 //***************************************************************************************************************
-/*
-void configurarPWM(void);
-void Incremento(void);
-void Decremento(void);*/
+
+void Incrementar(void);
+void Decrementar(void);
 
 //***************************************************************************************************************
 // Variables Globales
 //***************************************************************************************************************
 
-int contador = 0;
-LiquidCrystal LCD(RS, E, D4, D5, D6, D7);
-int adcRaw;
-int voltaje;
-int voltaje2; 
+int contador = 0; 
 
 //***************************************************************************************************************
 // Configuración
 //***************************************************************************************************************
 
 void setup() {
-  Serial.begin(115200);
-  LCD.begin(16, 2);
+  Serial.begin(115200); 
+
+  //Salida de los pines 
+  pinMode(ledR, OUTPUT);
+  pinMode(ledA, OUTPUT);
+  pinMode(ledV, OUTPUT);
+
+  pinMode(btn1, INPUT_PULLUP);
+  pinMode(btn2, INPUT_PULLUP);
+
 }
 
 //***************************************************************************************************************
@@ -63,19 +58,27 @@ void setup() {
 //***************************************************************************************************************
 
 void loop() {
-  voltaje = analogRead(Pot1);
-  voltaje = map(voltaje, 0, 4095, 0, 255);
-  //voltaje2 = analogRead(Pot2);
-  //voltaje2 = map(voltaje2, 0, 4095, 0, 255);
-
-  LCD.clear();
-  LCD.print("Rojo ");
-  LCD.print("Verde ");
-   LCD.print("Azul ");
-  LCD.setCursor(0, 1);
-  LCD.print(voltaje);
-  //LCD.setCursor(11, 1);
-  //LCD.print(voltaje2);
-  delay(250);
-
+  if(digitalRead(btn1) == LOW){
+    Incrementar(); 
+   }
+   
+  if(digitalRead(btn1) == LOW){
+    Decrementar(); 
+   }
+  
 }
+
+//***************************************************************************************************************
+// Función Incrementar
+//***************************************************************************************************************
+void Incrementar(){
+
+  if(btn1 == LOW && contador == 0 ){
+    digitalWrite(ledV, valor)
+   }
+}
+
+
+//***************************************************************************************************************
+// Función Decrementar
+//***************************************************************************************************************
