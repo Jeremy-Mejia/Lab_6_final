@@ -30,6 +30,10 @@
 #define D6 21
 #define D7 22
 
+//Comunicación Serial
+#define Tx 1
+#define Rx 3
+
 
 //***************************************************************************************************************
 // Prototipo de Funciones
@@ -48,12 +52,14 @@ LiquidCrystal LCD(RS, E, D4, D5, D6, D7);
 int adcRaw;
 int voltaje;
 int voltaje2; 
+int valor1; 
 
 //***************************************************************************************************************
 // Configuración
 //***************************************************************************************************************
 
 void setup() {
+  Serial2.begin(115200);
   Serial.begin(115200);
   LCD.begin(16, 2);
 }
@@ -65,17 +71,32 @@ void setup() {
 void loop() {
   voltaje = analogRead(Pot1);
   voltaje = map(voltaje, 0, 4095, 0, 255);
-  //voltaje2 = analogRead(Pot2);
-  //voltaje2 = map(voltaje2, 0, 4095, 0, 255);
 
+  //Serial2.write(voltaje);
+/*
+  
+  if (Serial2.available() > 0){
+    int valor = Serial2.read();  
+    LCD.setCursor(11, 1);
+    LCD.print(valor); 
+  }
+*/  
+
+  if (Serial2.available() > 0){
+    int valor = Serial2.read();  
+    LCD.setCursor(11, 1);
+    LCD.print(valor); 
+    Serial.print(valor);
+  }
+  
   LCD.clear();
   LCD.print("Rojo ");
   LCD.print("Verde ");
-   LCD.print("Azul ");
+  LCD.print("Azul ");
   LCD.setCursor(0, 1);
   LCD.print(voltaje);
-  //LCD.setCursor(11, 1);
-  //LCD.print(voltaje2);
+  
+  
   delay(250);
 
 }
