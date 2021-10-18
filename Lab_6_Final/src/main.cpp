@@ -51,7 +51,8 @@ int contador = 0;
 LiquidCrystal LCD(RS, E, D4, D5, D6, D7);
 int adcRaw;
 int voltaje;
-int voltaje2; 
+int voltajeA;
+int voltajeV;
 int valor1; 
 
 //***************************************************************************************************************
@@ -71,23 +72,36 @@ void setup() {
 void loop() {
   voltaje = analogRead(Pot1);
   voltaje = map(voltaje, 0, 4095, 0, 255);
+  /*
+  voltajeA = analogRead(Pot2);
+  voltajeA = map(voltajeA, 0, 4095, 0, 255);
+  */
 
-  //Serial2.write(voltaje);
-/*
+  Serial2.write(voltaje);
+  voltajeA = Serial2.read();
+  Serial.print(voltajeA);
+
   
   if (Serial2.available() > 0){
-    int valor = Serial2.read();  
-    LCD.setCursor(11, 1);
-    LCD.print(valor); 
+    voltajeA = Serial2.read();  
   }
-*/  
 
+/*
   if (Serial2.available() > 0){
-    int valor = Serial2.read();  
+    int valor2 = Serial2.read();  
+    LCD.setCursor(5, 1);
+    LCD.print(valor2); 
+    voltajeV = valor2;
+    
+  }*/
+  /*
+  if (Serial2.available() > 0){
+    int valor1 = Serial2.read();  
     LCD.setCursor(11, 1);
-    LCD.print(valor); 
-    Serial.print(valor);
-  }
+    LCD.print(valor1); 
+    voltajeA = valor1;
+    Serial.println(valor1);
+  }*/
   
   LCD.clear();
   LCD.print("Rojo ");
@@ -95,6 +109,10 @@ void loop() {
   LCD.print("Azul ");
   LCD.setCursor(0, 1);
   LCD.print(voltaje);
+  LCD.setCursor(5, 1);
+  LCD.print(voltajeV);  
+  LCD.setCursor(11, 1);
+  LCD.print(voltajeA); 
   
   
   delay(250);

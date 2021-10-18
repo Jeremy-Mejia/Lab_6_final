@@ -51,6 +51,7 @@ int voltaje1 = 0;
 
 void setup() {
   Serial1.begin(115200); 
+  Serial2.begin(115200); 
   Serial.begin(115200); 
 
   //Salida de los pines 
@@ -73,12 +74,12 @@ void loop() {
   voltaje1 = map(voltaje1, 0, 4095, 0, 255);
   analogWrite(ledA, voltaje1);
   Serial1.write(voltaje1);
-  Serial.println(voltaje1);
-/*
+  //Serial.println(voltaje1);
+
   if (Serial1.available() > 0){
      int valor = Serial1.read();  
      analogWrite(ledR, valor);
-  }*/
+  }
   
   if(digitalRead(btn1) == LOW){
     Incrementar(); 
@@ -87,7 +88,6 @@ void loop() {
   if(digitalRead(btn2) == LOW){
     Decrementar(); 
    }
-  
 }
 
 //***************************************************************************************************************
@@ -98,25 +98,25 @@ void Incrementar(void){
   if(digitalRead(btn1) == LOW && contador == 0){
     analogWrite(ledV, contador);
     contador = contador + 1; 
-    Serial1.print(contador);
+    Serial.print(contador);
     delay(500);
     }
     
   else if(digitalRead(btn1) == LOW && contador == 1){
     analogWrite(ledV, contador);
-    Serial1.print(contador);
+    Serial.print(contador);
     contador = contador + 1; 
     delay(500);
     }
   else if(digitalRead(btn1) == LOW && contador == 255){
     analogWrite(ledV, contador);
     contador = contador;
-    Serial1.print(contador);
+    Serial.print(contador);
     delay(500);
     }
   else if(digitalRead(btn1) == LOW && contador++){
     analogWrite(ledV, contador - 1);
-    Serial1.print(contador);
+    Serial.print(contador - 1);
     delay(500);
     } 
 }
@@ -130,17 +130,17 @@ void Decrementar(void){
 
   if(digitalRead(btn2) == LOW && contador == 0){
     analogWrite(ledV, contador);
-    Serial1.print(contador);
+    Serial.print(contador);
     delay(500);
     }
   else if(digitalRead(btn2) == LOW && contador == 1){
     analogWrite(ledV, contador - 1);
-    Serial1.print(contador - 1);
+    Serial.print(contador - 1);
     delay(500);
     }
   else if(digitalRead(btn2) == LOW && contador--){
     analogWrite(ledV, contador - 1);
-    Serial1.print(contador);
+    Serial.print(contador);
     delay(500);
     }
 }
